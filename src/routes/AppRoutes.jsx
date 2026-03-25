@@ -71,7 +71,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
 import PublicRoutes from "./PublicRoutes";
-import AuthRoutes from "./AuthRoutes/AuthRoutes";
+import AuthRoutes from "./Auth/AuthRoutes";
 import DashboardRoutes from "./DashboardRoutes";
 
 
