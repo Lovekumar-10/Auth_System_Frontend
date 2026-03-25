@@ -65,14 +65,12 @@
 
 
 
-
-
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
-import PublicRoutes from "./publicRoutes";
+import PublicRoutes from "./publicRoutes/PublicRoutes"
 import AuthRoutes from "./auth/AuthRoutes"
-import DashboardRoutes from "./dashboardRoutes";
+import DashboardRoutes from "./dashboardRoutes/DashboardRoutes";
 
 
 const AppRoutes = () => {
@@ -89,6 +87,14 @@ const AppRoutes = () => {
 
       </Routes>
     </Router>
+  );
+};
+
+export default AppRoutes;
+
+
+
+
   );
 };
 
