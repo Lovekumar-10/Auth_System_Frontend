@@ -1,7 +1,7 @@
 import { Route } from "react-router-dom";
 
 import DashboardLayout from "../layouts/DashboardLayout";
-import PrivateRoute from "./guards/Private";
+import PrivateRoute from "./guards/PrivateRoute";
 
 import DashboardHome from "../pages/dashboard/DashboardHome";
 import DeveloperNetwork from "../pages/dashboard/DeveloperNetwork";

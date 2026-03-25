@@ -1,21 +1,12 @@
 import React from 'react'
-import Approutes from './routes/AppRoutes'
-
+import AppRoutes from './routes/AppRoutes'
 
 const App = () => {
   return (
     <div>
-      <Approutes/>
+      <AppRoutes/>
     </div>
   )
 }
 
 export default App
-
-
-
-
-
-
-
-

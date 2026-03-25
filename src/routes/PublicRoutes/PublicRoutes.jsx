@@ -21,7 +21,7 @@ import PublicLayout from "../layouts/PublicLayout";
 import Home from "../pages/publicPages/Home";
 import About from "../pages/publicPages/About";
 
-import PublicRoute from "./guards/Public";
+import PublicRoute from "./guards/PublicRoute";
 
 const PublicRoutes = () => (
   <Route element={<PublicLayout />}>

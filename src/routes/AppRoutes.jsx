@@ -75,7 +75,7 @@ import AuthRoutes from "./AuthRoutes/AuthRoutes";
 import DashboardRoutes from "./DashboardRoutes";
 
 
-const Approutes = () => {
+const AppRoutes = () => {
 
   return (
     <Router>
@@ -92,4 +92,4 @@ const Approutes = () => {
   );
 };
 
-export default Approutes;
+export default AppRoutes;
