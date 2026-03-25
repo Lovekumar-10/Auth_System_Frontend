@@ -1,11 +1,11 @@
 import React from 'react'
-import AppRoutes from "./routes/Approutes";
+import Approutes from './routes/AppRoutes'
 
 
 const App = () => {
   return (
     <div>
-      <AppRoutes/>
+      <Approutes/>
     </div>
   )
 }

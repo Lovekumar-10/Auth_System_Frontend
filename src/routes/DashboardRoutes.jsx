@@ -1,14 +1,14 @@
 import { Route } from "react-router-dom";
 
-import DashboardLayout from "../../layouts/DashboardLayout";
-import PrivateRoute from "../guards/PrivateRoute";
+import DashboardLayout from "../layouts/DashboardLayout";
+import PrivateRoute from "./guards/PrivateRoute";
 
-import DashboardHome from "../../pages/dashboard/DashboardHome";
-import DeveloperNetwork from "../../pages/dashboard/DeveloperNetwork";
-import MyProjects from "../../pages/dashboard/MyProjects";
-import PostProject from "../../pages/dashboard/PostProject";
-import CollaborationBoards from "../../pages/dashboard/CollaborationBoards";
-import Messages from "../../pages/dashboard/Messages";
+import DashboardHome from "../pages/dashboard/DashboardHome";
+import DeveloperNetwork from "../pages/dashboard/DeveloperNetwork";
+import MyProjects from "../pages/dashboard/MyProjects";
+import PostProject from "../pages/dashboard/PostProject";
+import CollaborationBoards from "../pages/dashboard/CollaborationBoards";
+import Messages from "../pages/dashboard/Messages";
 
 const DashboardRoutes = () => (
   <Route
