@@ -1,5 +1,6 @@
 import React from 'react'
-import AppRoutes from './routes/AppRoutes'
+import AppRoutes from "./routes/Approutes";
+
 
 const App = () => {
   return (
@@ -10,3 +11,11 @@ const App = () => {
 }
 
 export default App
+
+
+
+
+
+
+
+
