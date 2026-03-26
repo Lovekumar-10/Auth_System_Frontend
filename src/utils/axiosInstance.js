@@ -100,8 +100,8 @@ import axios from "axios";
 import { toast } from "sonner";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000/api",
-  // baseURL: "https://auth-system-backend-h2wa.onrender.com/api",
+  // baseURL: "http://localhost:5000/api",
+  baseURL: "https://auth-system-backend-h2wa.onrender.com/api",
   withCredentials: true,
 });
 
@@ -157,8 +157,8 @@ axiosInstance.interceptors.response.use(
 
       try {
         await axios.post(
-          "http://localhost:5000/api/auth/refresh-token",
-          // "https://auth-system-backend-h2wa.onrender.com/api/auth/refresh-token",
+          // "http://localhost:5000/api/auth/refresh-token",
+          "https://auth-system-backend-h2wa.onrender.com/api/auth/refresh-token",
           {},
           { withCredentials: true }
         );
