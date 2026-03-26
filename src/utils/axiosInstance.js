@@ -100,14 +100,15 @@ import axios from "axios";
 import { toast } from "sonner";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000/api",
+  // baseURL: "http://localhost:5000/api",
+  baseURL: "https://auth-system-backend-h2wa.onrender.com/api",
   withCredentials: true,
 });
 
-// ✅ RESPONSE INTERCEPTOR
+//  RESPONSE INTERCEPTOR
 axiosInstance.interceptors.response.use(
   (response) => {
-    // ✅ Success toast only for login/register
+    //  Success toast only for login/register
     if (
       response.config.url.includes("/login") ||
       response.config.url.includes("/register")
@@ -122,7 +123,7 @@ axiosInstance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // 🌐 Network error
+    // Network error
     if (!error.response) {
       toast.error("Network error, please check your connection.");
       return Promise.reject(error);
@@ -132,31 +133,32 @@ axiosInstance.interceptors.response.use(
     const message =
       error.response?.data?.message || "Something went wrong";
 
-    // 🚫 Skip refresh-token API itself
+    // Skip refresh-token API itself
     if (originalRequest.url.includes("/auth/refresh-token")) {
       return Promise.reject(error);
     }
 
-    // 🚫 Prevent infinite loop for /auth/me
+    //  Prevent infinite loop for /auth/me
     if (originalRequest.url.includes("/auth/me")) {
       return Promise.reject(error);
     }
 
-    // 🔐 HANDLE 401
+    //  HANDLE 401
     if (status === 401 && !originalRequest._retry) {
-      // 🔥 If session expired → logout directly
+      // If session expired → logout directly
       if (message === "Session expired. Please login again.") {
         toast.error(message);
         window.location.href = "/login";
         return Promise.reject(error);
       }
 
-      // 🔄 Try refresh token
+      // Try refresh token
       originalRequest._retry = true;
 
       try {
         await axios.post(
-          "http://localhost:5000/api/auth/refresh-token",
+          // "http://localhost:5000/api/auth/refresh-token",
+          "https://auth-system-backend-h2wa.onrender.com/api/auth/refresh-token",
           {},
           { withCredentials: true }
         );
@@ -169,7 +171,7 @@ axiosInstance.interceptors.response.use(
       }
     }
 
-    // ❌ Show error toast for ALL other cases (including login 401)
+    //  Show error toast for ALL other cases (including login 401)
     toast.error(message);
 
     return Promise.reject(error);
