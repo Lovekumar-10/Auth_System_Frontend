@@ -71,9 +71,9 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
 // import PublicRoutes from "./publicRoutes/PublicRoutes";
-import PublicRoutes from "./publicRoutes/PublicRoutes.jsx";
-import AuthRoutes from "./auth/AuthRoutes.jsx"
-import DashboardRoutes from "./dashboardRoutes/DashboardRoutes";
+import PublicRoutes from "./public/PublicRoutes.jsx";
+import AuthRoutes from "./authRoutes/Auth.jsx"
+import DashboardRoutes from "./dashboardRoutes/Dashboard.jsx";
 
 
 const AppRoutes = () => {
