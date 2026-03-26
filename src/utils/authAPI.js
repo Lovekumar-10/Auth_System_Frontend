@@ -3,8 +3,8 @@
 import axios from "axios"; 
 import axiosInstance from "./axiosInstance";
 
-// const BASE_URL = "http://localhost:5000/api"; 
-const BASE_URL = "https://auth-system-backend-h2wa.onrender.com/api"; 
+const BASE_URL = "http://localhost:5000/api"; 
+// const BASE_URL = "https://auth-system-backend-h2wa.onrender.com/api"; 
 
 
 // Login API
@@ -42,6 +42,14 @@ export const resetPassword = (token, newPassword, confirmPassword) =>
     confirmPassword,
   });
   
+
+  // Delete account (marks for deletion)
+export const deleteAccount = () =>
+  axiosInstance.post("/auth/delete-account"); // no body needed
+
+// Cancel pending deletion
+export const cancelDeletion = () =>
+  axiosInstance.post("/auth/cancel-deletion"); // no body needed
 
 
 

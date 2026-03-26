@@ -1,11 +1,9 @@
-
-
 import React, { createContext, useContext, useState, useEffect } from "react";
 import {
   loginUser,
   registerUser,
   logoutUser,
-  refreshToken as refreshTokenAPI, 
+  refreshToken as refreshTokenAPI,
   logoutAllDevices,
   getCurrentUser,
   forgotPassword as forgotPasswordAPI,
@@ -18,7 +16,6 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
- 
   // useEffect(() => {
   //   const fetchUser = async () => {
   //     try {
@@ -27,7 +24,7 @@ export const AuthProvider = ({ children }) => {
   //         setUser(res.data.user);
   //       }
   //     } catch (err) {
-       
+
   //       setUser(null);
   //     } finally {
   //       setLoading(false);
@@ -37,33 +34,29 @@ export const AuthProvider = ({ children }) => {
   //   fetchUser();
   // }, []);
 
-
   useEffect(() => {
-  const fetchUser = async () => {
-    try {
-      const res = await getCurrentUser(); // /auth/me
-      if (res.data?.user) {
-        setUser(res.data.user); // user logged in
-      } else {
-        setUser(null); // no user, first-time visitor
+    const fetchUser = async () => {
+      try {
+        const res = await getCurrentUser(); // /auth/me
+        if (res.data?.user) {
+          setUser(res.data.user); // user logged in
+        } else {
+          setUser(null); // no user, first-time visitor
+        }
+      } catch (err) {
+        // 🔹 IGNORE first-time 401 for /me
+        if (err.response?.status === 401) {
+          setUser(null); // simply no user, no console error
+        } else {
+          console.error(err); // real errors only
+        }
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      // 🔹 IGNORE first-time 401 for /me
-      if (err.response?.status === 401) {
-        setUser(null); // simply no user, no console error
-      } else {
-        console.error(err); // real errors only
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
 
-  fetchUser();
-}, []);
-
-
-
+    fetchUser();
+  }, []);
 
   const login = async (email, password) => {
     setLoading(true);
@@ -76,28 +69,24 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
- 
   const register = async (name, email, password) => {
     setLoading(true);
     try {
       const res = await registerUser(name, email, password);
-     
+
       return res.data;
     } finally {
       setLoading(false);
     }
   };
 
-  
   const logout = async () => {
     try {
       await logoutUser();
     } finally {
-      
       setUser(null);
     }
   };
-
 
   const logoutAll = async () => {
     try {
@@ -107,16 +96,38 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-
   const forgotPassword = async (email) => {
     const res = await forgotPasswordAPI(email);
     return res.data;
   };
 
-  
   const resetPassword = async (token, newPassword, confirmPassword) => {
     const res = await resetPasswordAPI(token, newPassword, confirmPassword);
     return res.data;
+  };
+
+  const deleteAccountAction = async () => {
+    try {
+      const res = await deleteAccount();
+      // mark user as pending deletion
+      setUser((prev) => ({ ...prev, pendingDeletion: true }));
+      return res.data;
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
+  };
+
+  const cancelDeletionAction = async () => {
+    try {
+      const res = await cancelDeletion();
+      // cancel pending deletion
+      setUser((prev) => ({ ...prev, pendingDeletion: false }));
+      return res.data;
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
   };
 
   return (
@@ -128,6 +139,8 @@ export const AuthProvider = ({ children }) => {
         register,
         logout,
         logoutAll,
+        deleteAccount: deleteAccountAction, 
+        cancelDeletion: cancelDeletionAction, 
         forgotPassword,
         resetPassword,
         loading,
@@ -139,14 +152,3 @@ export const AuthProvider = ({ children }) => {
 };
 
 export const useAuth = () => useContext(AuthContext);
-
-
-
-
-
-
-
-
-
-
-
