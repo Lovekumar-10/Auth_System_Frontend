@@ -1,8 +1,3 @@
-
-
-
-
-
 // src/pages/Login.jsx
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -17,6 +12,7 @@ import {
   Github,
 } from "lucide-react";
 import { useAuth } from "../../context/authContext";
+import DeletionNoticeModal from "../../components/DeletionNoticeModal";
 
 const Login = () => {
   const { login } = useAuth();
@@ -24,27 +20,46 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const [showDeletionModal, setShowDeletionModal] = useState(false);
+  const [deletionMessage, setDeletionMessage] = useState("");
+
   const navigate = useNavigate();
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setLoading(true);
+  //   // setError("");
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setLoading(true);
-  // setError("");
+  //   try {
+  //     const res = await login(email, password);
 
-  try {
-    const res = await login(email, password);
+  //     navigate("/dashboard");
+  //   } catch (err) {
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
-    navigate("/dashboard");
-  } catch (err) {
-    
-    
-  } finally {
-    setLoading(false);
-  }
-};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
 
+    try {
+      const res = await login(email, password);
 
+      if (res.deletionScheduled) {
+        setDeletionMessage(res.deletionMessage);
+        setShowDeletionModal(true);
+      } else {
+        navigate("/dashboard");
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen w-full flex bg-white text-slate-900 font-sans">
@@ -103,7 +118,6 @@ const handleSubmit = async (e) => {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
-
             {/* Email Input */}
             <div className="space-y-1">
               <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">
@@ -143,13 +157,12 @@ const handleSubmit = async (e) => {
                 </Link>
               </div>
               <div className="relative">
-                
                 <Lock
                   className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300"
                   size={18}
                 />
                 <input
-                 type={showPassword ? "text" : "password"}
+                  type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
@@ -166,7 +179,7 @@ const handleSubmit = async (e) => {
               </div>
             </div>
 
-            <div className="flex items-center space-x-2 ml-1">
+            {/* <div className="flex items-center space-x-2 ml-1">
               <input
                 type="checkbox"
                 id="remember"
@@ -178,7 +191,7 @@ const handleSubmit = async (e) => {
               >
                 Remember me for 30 days
               </label>
-            </div>
+            </div> */}
 
             <motion.button
               whileHover={{ scale: 1.01 }}
@@ -225,6 +238,18 @@ const handleSubmit = async (e) => {
           </p>
         </motion.div>
       </div>
+
+      <DeletionNoticeModal
+        show={showDeletionModal}
+        message={deletionMessage}
+        
+        onClose={() => setShowDeletionModal(false)}
+        onRecover={() => {
+          // later we will connect API here
+          setShowDeletionModal(false);
+          navigate("/dashboard");
+        }}
+      />
     </div>
   );
 };

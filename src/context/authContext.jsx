@@ -6,9 +6,12 @@ import {
   refreshToken as refreshTokenAPI,
   logoutAllDevices,
   getCurrentUser,
+  deleteAccount,
+  cancelDeletion,
   forgotPassword as forgotPasswordAPI,
   resetPassword as resetPasswordAPI,
 } from "../utils/authAPI";
+
 
 const AuthContext = createContext();
 
@@ -57,6 +60,7 @@ export const AuthProvider = ({ children }) => {
 
     fetchUser();
   }, []);
+
 
   const login = async (email, password) => {
     setLoading(true);
@@ -110,7 +114,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const res = await deleteAccount();
       // mark user as pending deletion
-      setUser((prev) => ({ ...prev, pendingDeletion: true }));
+      setUser((prev) => ({ ...prev, pendingDeletion: true ,   deletionRequestedAt: new Date(), }));
       return res.data;
     } catch (err) {
       console.error(err);

@@ -142,13 +142,50 @@ const Sidebar = ({ activeItem: initialActive = "Dashboard" }) => {
       </nav>
 
       {/* --- BOTTOM SECTION --- */}
-      <div className="p-3 border-t border-white/5">
+      {/* <div className="p-3 border-t border-white/5">
         <div
           className={`flex items-center h-11 text-gray-400 hover:text-white cursor-pointer rounded-md hover:bg-white/5 transition-all ${collapsed ? "justify-center" : "px-3 gap-3"}`}
         >
           <Settings size={20} />
           {!collapsed && (
             <span className="text-[13.5px] font-medium">Settings</span>
+          )}
+        </div>
+      </div> */}
+
+      {/* --- BOTTOM SECTION --- */}
+      <div className="p-3 border-t border-white/5">
+        <div
+          onClick={() => navigate("/dashboard/Settings")} // Added navigate here
+          className={`group relative flex items-center h-11 cursor-pointer rounded-md transition-all duration-200 
+    ${collapsed ? "justify-center" : "px-3 gap-3"} 
+    ${
+      currentPath === "/dashboard/Settings"
+        ? "bg-gradient-to-r from-purple-500/10 to-transparent text-white"
+        : "text-gray-400 hover:bg-white/[0.03] hover:text-gray-200"
+    }`}
+        >
+          {/* Active indicator line */}
+          {currentPath === "/dashboard/Settings" && (
+            <div className="absolute left-0 top-[20%] bottom-[20%] w-[3px] bg-purple-500 rounded-r-full shadow-[0_0_8px_rgba(168,85,247,0.6)]" />
+          )}
+
+          <Settings
+            size={20}
+            className={
+              currentPath === "/dashboard/Settings" ? "text-purple-400" : ""
+            }
+          />
+
+          {!collapsed && (
+            <span className="text-[13.5px] font-medium">Settings</span>
+          )}
+
+          {/* Tooltip for collapsed mode */}
+          {collapsed && (
+            <div className="absolute left-14 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all bg-[#1a1a1a] text-white text-xs py-1.5 px-3 rounded border border-white/10 whitespace-nowrap z-50">
+              Settings
+            </div>
           )}
         </div>
       </div>

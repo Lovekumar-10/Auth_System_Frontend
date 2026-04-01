@@ -9,6 +9,7 @@ import MyProjects from "../../pages/dashboard/MyProjects";
 import PostProject from "../../pages/dashboard/PostProject";
 import CollaborationBoards from "../../pages/dashboard/CollaborationBoards";
 import Messages from "../../pages/dashboard/Messages";
+import Settings from "../../pages/dashboard/Setting";
 
 const DashboardRoutes = () => (
   <Route
@@ -25,6 +26,8 @@ const DashboardRoutes = () => (
     <Route path="post-project" element={<PostProject />} />
     <Route path="boards" element={<CollaborationBoards />} />
     <Route path="messages" element={<Messages />} />
+    <Route path="settings" element={<Settings/>} />
+
   </Route>
 );
 
