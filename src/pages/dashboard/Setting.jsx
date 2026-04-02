@@ -123,7 +123,7 @@ const Settings = () => {
           </section>
 
           {/* ⚠️ Danger Zone */}
-          <section className="pt-6 border-t border-gray-50">
+          {/* <section className="pt-6 border-t border-gray-50">
             <div className="flex items-center gap-2 mb-5">
               <AlertTriangle className="text-[#ef4444]" size={20} />
               <h2 className="text-lg font-bold text-[#ef4444] uppercase tracking-wider text-sm">
@@ -162,6 +162,65 @@ const Settings = () => {
                 >
                   <RefreshCw size={18} />
                   Keep My Account
+                </button>
+              )}
+            </div>
+          </section> */}
+
+          <section className="pt-6 border-t border-gray-50">
+            <div className="flex items-center gap-2 mb-5">
+              <AlertTriangle
+                className={
+                  user?.pendingDeletion ? "text-[#22c55e]" : "text-[#ef4444]"
+                }
+                size={20}
+              />
+              <h2
+                className={`text-lg font-bold uppercase tracking-wider text-sm ${
+                  user?.pendingDeletion ? "text-[#22c55e]" : "text-[#ef4444]"
+                }`}
+              >
+                {user?.pendingDeletion ? "Account Recovery" : "Danger Zone"}
+              </h2>
+            </div>
+
+            <div
+              className={`p-6 rounded-3xl border flex flex-col md:flex-row items-center justify-between gap-6
+      ${
+        user?.pendingDeletion
+          ? "border-[#22c55e]/30 bg-[#22c55e]/5"
+          : "border-[#ef4444]/20 bg-[#ef4444]/5"
+      }`}
+            >
+              <div className="text-center md:text-left">
+                <h3 className="text-[#290024] font-bold">
+                  {user?.pendingDeletion
+                    ? "Your account is scheduled for deletion"
+                    : "Delete Your Account"}
+                </h3>
+
+                <p className="text-[#7a7a7a] text-sm mt-1 max-w-sm">
+                  {user?.pendingDeletion
+                    ? "You have 15 days to recover your account. After that, all your data will be permanently deleted."
+                    : "Once deleted, your projects and profile cannot be recovered."}
+                </p>
+              </div>
+
+              {!user?.pendingDeletion ? (
+                <button
+                  onClick={() => openConfirm("delete")}
+                  className="w-full md:w-auto px-8 py-3 rounded-xl bg-[#ef4444] text-white hover:bg-[#b91c1c] shadow-lg shadow-red-200 transition-all font-bold text-sm flex items-center justify-center gap-2"
+                >
+                  <Trash2 size={18} />
+                  Delete Permanently
+                </button>
+              ) : (
+                <button
+                  onClick={() => openConfirm("cancel")}
+                  className="w-full md:w-auto px-8 py-3 rounded-xl bg-[#22c55e] text-white hover:bg-[#16a34a] shadow-lg shadow-green-200 transition-all font-bold text-sm flex items-center justify-center gap-2"
+                >
+                  <RefreshCw size={18} />
+                  Bring My Account Back
                 </button>
               )}
             </div>
